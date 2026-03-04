@@ -25,7 +25,7 @@ function AvatarUploadModal({ isOpen, onClose, currentAvatar, onUpload }) {
     formData.append("avatar", file);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`$API_BASE}/api/users/avatar`, {
+      const res = await fetch(`${API_BASE}/api/users/avatar`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

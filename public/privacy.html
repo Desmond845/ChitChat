@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="/icon.jpg" />
+    <link rel="preload" as="image" href="/icon.jpg">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Chit Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:      #060b18;
+      --bg-card: rgba(255,255,255,0.04);
+      --blue:    #3b82f6;
+      --blue-light: #60a5fa;
+      --border:  rgba(255,255,255,0.08);
+      --text:    #f0f4ff;
+      --muted:   rgba(240,244,255,0.55);
+      --subtle:  rgba(240,244,255,0.3);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(ellipse 70% 40% at 50% -10%, rgba(37,99,235,0.14) 0%, transparent 60%);
+    }
+    header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      position: sticky;
+      top: 0;
+      background: rgba(6,11,24,0.85);
+      backdrop-filter: blur(16px);
+      z-index: 10;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+    }
+    .logo-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.125rem;
+      letter-spacing: -0.02em;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+    .page-badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--blue-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .last-updated {
+      font-size: 0.8125rem;
+      color: var(--subtle);
+      margin-bottom: 2.5rem;
+    }
+    .intro {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.75;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(96,165,250,0.5), transparent);
+    }
+    section { margin-bottom: 2.25rem; }
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    h2 .section-num {
+      width: 26px; height: 26px;
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--blue-light);
+      flex-shrink: 0;
+    }
+    p { font-size: 0.9375rem; color: var(--muted); margin-bottom: 0.75rem; }
+ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; }
+    ul li {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--blue-light);
+      opacity: 0.7;
+    }
+    a { color: var(--blue-light); text-decoration: underline; text-underline-offset: 3px; }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+    .contact-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8125rem;
+      color: var(--subtle);
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.625rem; }
+      main { padding: 2rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <!-- <div class="logo-icon">💬</div> -->
+<div class="logo-icon" style="overflow:hidden; padding:0;">
+  <img src="/icon.jpg" alt="Chit Chat" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:10px;" />
+</div>
+  <span class="logo-name">Chit Chat</span>
+</header>
+
+<main>
+  <div class="page-badge">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last updated: March 2026</p>
+
+  <div class="intro">
+    At Chit Chat, your privacy is important to us. This policy explains what information we collect when you use our messaging service, how we use it, and what rights you have over your data. By using Chit Chat, you agree to the practices described here.
+  </div>
+
+  <section>
+    <h2><span class="section-num">1</span> Information We Collect</h2>
+    <p>When you create an account and use Chit Chat, we collect the following:</p>
+    <ul>
+      <li><strong>Account information:</strong> your email address, chosen username, and hashed password (we never store your password in plain text).</li>
+      <li><strong>Profile information:</strong> optional profile photo and bio that you choose to add.</li>
+      <li><strong>Messages:</strong> the content of messages you send and receive through the service, stored to deliver them to recipients.</li>
+      <li><strong>Usage data:</strong> basic technical information such as when you last connected, to power features like "last seen" status.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="section-num">2</span> How We Use Your Information</h2>
+    <p>We use the information we collect solely to provide and improve Chit Chat:</p>
+    <ul>
+      <li>To authenticate you and keep your account secure.</li>
+      <li>To deliver messages between you and your contacts in real time.</li>
+      <li>To display your profile photo, username, and bio to other users.</li>
+      <li>To show online/offline status and last seen information to your contacts.</li>
+      <li>To send you important service emails such as OTP verification codes and password reset links.</li>
+    </ul>
+    <p>We do not use your data for advertising, and we do not sell your information to third parties — ever.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">3</span> Message Storage & Security</h2>
+    <p>Messages are stored on our servers to ensure reliable delivery, including when a recipient is offline. We use industry-standard security practices to protect your data in transit and at rest.</p>
+    <p>Note: Chit Chat does not currently offer end-to-end encryption. Your messages may be accessible to authorised administrators for the purposes of safety and abuse prevention. We recommend not sharing highly sensitive personal information over the platform.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">4</span> Data Sharing</h2>
+    <p>We do not share your personal data with third parties except in the following limited cases:</p>
+    <ul>
+<li><strong>With your consent:</strong> for example, your username and profile photo are visible to other Chit Chat users you interact with.</li>
+      <li><strong>Service providers:</strong> we may use trusted third-party services (such as email delivery) strictly to operate the platform, and they are prohibited from using your data for any other purpose.</li>
+      <li><strong>Legal requirements:</strong> we may disclose information if required by law or to protect the rights and safety of our users.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="section-num">5</span> Your Rights</h2>
+    <p>You have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong>Access:</strong> you can view your profile information at any time in the app.</li>
+      <li><strong>Update:</strong> you can change your username, bio, and profile photo at any time.</li>
+      <li><strong>Delete:</strong> you can delete individual messages. To request full account deletion, contact us at the email below.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="section-num">6</span> Cookies & Local Storage</h2>
+    <p>Chit Chat uses your browser's local storage to store your session token so you stay logged in between visits. We do not use tracking cookies or third-party analytics.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">7</span> Children's Privacy</h2>
+    <p>Chit Chat is not directed at children under the age of 13. We do not knowingly collect personal information from anyone under 13. If you believe a child has created an account, please contact us and we will remove it promptly.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">8</span> Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify users of significant changes by posting a notice in the app or sending a message through the ChitChat Updates channel. Continued use of Chit Chat after changes take effect constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2><span class="section-num">9</span> Contact Us</h2>
+    <div class="contact-box">
+      <p style="margin-bottom: 0.25rem;">If you have any questions about this Privacy Policy or how your data is handled, you can reach us at:</p>
+      <p style="margin: 0.5rem 0 0;"><strong style="color: #f0f4ff;">Chit Chat Team</strong><br />
+      <a href="mailto:pakugbedesmond845@gmail.com">akugbedesmond845@gmail.com</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Chit Chat · <a href="/terms.html">Terms of Service</a> · Privacy Policy
+</footer>
+
+</body>
+</html>

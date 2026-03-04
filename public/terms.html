@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+      <link rel="icon" type="image/svg+xml" href="/icon.jpg" />
+    <link rel="preload" as="image" href="/icon.jpg">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Chit Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:         #060b18;
+      --bg-card:    rgba(255,255,255,0.04);
+      --blue:       #3b82f6;
+      --blue-light: #60a5fa;
+      --border:     rgba(255,255,255,0.08);
+      --text:       #f0f4ff;
+      --muted:      rgba(240,244,255,0.55);
+      --subtle:     rgba(240,244,255,0.3);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(ellipse 70% 40% at 50% -10%, rgba(37,99,235,0.14) 0%, transparent 60%);
+    }
+
+    header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      position: sticky;
+      top: 0;
+      background: rgba(6,11,24,0.88);
+      backdrop-filter: blur(16px);
+      z-index: 10;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 0.75rem; }
+
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+      flex-shrink: 0;
+    }
+
+    .logo-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .header-links a {
+      font-size: 0.8125rem;
+      color: var(--subtle);
+      text-decoration: none;
+      transition: color 180ms;
+    }
+
+    .header-links a:hover { color: var(--blue-light); }
+    .header-links a.active { color: var(--blue-light); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .page-badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--blue-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .last-updated {
+      font-size: 0.8125rem;
+      color: var(--subtle);
+      margin-bottom: 2.5rem;
+    }
+
+    .intro {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.75;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(96,165,250,0.5), transparent);
+    }
+
+    section { margin-bottom: 2.25rem; }
+
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+h2 .section-num {
+      width: 26px; height: 26px;
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--blue-light);
+      flex-shrink: 0;
+    }
+
+    p {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    ul {
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    ul li {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--blue-light);
+      opacity: 0.7;
+    }
+
+    a {
+      color: var(--blue-light);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+
+    .highlight-box {
+      background: rgba(59,130,246,0.07);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgba(240,244,255,0.65);
+    }
+
+    .warning-box {
+      background: rgba(251,191,36,0.07);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .warning-box p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgba(253,230,138,0.8);
+    }
+
+    .contact-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8125rem;
+      color: var(--subtle);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.625rem; }
+      main { padding: 2rem 1rem 4rem; }
+      header { padding: 1rem; }
+      .header-links { gap: 0.875rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <!-- <div class="logo-icon">💬</div> -->
+<div class="logo-icon" style="overflow:hidden; padding:0;">
+  <img src="/icon.jpg" alt="Chit Chat" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:10px;" />
+</div>
+    <span class="logo-name">Chit Chat</span>
+  </div>
+  <nav class="header-links">
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/terms.html" class="active">Terms of Service</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-badge">Legal</div>
+  <h1>Terms of Service</h1>
+  <p class="last-updated">Last updated: March 2026</p>
+
+  <div class="intro">
+    Welcome to Chit Chat. By creating an account or using our service in any way, you agree to be bound by these Terms of Service. Please read them carefully. If you do not agree, do not use Chit Chat.
+  </div>
+
+  <section>
+    <h2><span class="section-num">1</span> Who Can Use Chit Chat</h2>
+    <p>You must be at least 13 years old to create an account and use Chit Chat. By using the service, you confirm that you meet this requirement. If you are under 18, you should review these terms with a parent or guardian.</p>
+    <p>You may only create one account. Accounts are personal and non-transferable.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">2</span> Your Account</h2>
+    <p>When you sign up, you are responsible for:</p>
+    <ul>
+      <li>Keeping your password secure and confidential.</li>
+      <li>All activity that occurs under your account.</li>
+      <li>Notifying us immediately if you suspect unauthorised access.</li>
+      <li>Providing accurate information — do not impersonate others or use misleading usernames.</li>
+    </ul>
+    <p>We reserve the right to suspend or delete accounts that violate these terms.</p>
+  </section>
+<section>
+    <h2><span class="section-num">3</span> Acceptable Use</h2>
+    <p>Chit Chat is built for real, positive conversations. You agree <strong style="color: rgba(240,244,255,0.8);">not</strong> to use the service to:</p>
+    <ul>
+      <li>Harass, threaten, bully, or abuse any other user.</li>
+      <li>Send spam, unsolicited messages, or automated bulk messages.</li>
+      <li>Share illegal content, including anything that exploits or harms minors.</li>
+      <li>Distribute malware, viruses, or any code designed to harm others' devices.</li>
+      <li>Impersonate Chit Chat, its team, or any other person or organisation.</li>
+      <li>Attempt to gain unauthorised access to other users' accounts or our systems.</li>
+      <li>Use the service for any unlawful purpose under applicable law.</li>
+    </ul>
+    <div class="warning-box">
+      <p>⚠ Violations may result in immediate account suspension without notice, particularly for content that endangers the safety of others.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="section-num">4</span> Messages & Content</h2>
+    <p>You own the content you send. By sending messages through Chit Chat, you grant us a limited licence to store and transmit that content solely for the purpose of delivering it to the intended recipient.</p>
+    <p>We do not claim ownership of your messages or use them for advertising. However, we may access messages when required for safety investigations or legal compliance.</p>
+    <div class="highlight-box">
+      <p>💡 Chit Chat does not currently offer end-to-end encryption. Do not share highly sensitive personal information such as financial data or passwords over the platform.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="section-num">5</span> ChitChat Updates Channel</h2>
+    <p>Chit Chat may send you service announcements, updates, and important notices via the ChitChat Updates channel. These messages are:</p>
+    <ul>
+      <li>Informational — not marketing or advertising.</li>
+      <li>Read-only — you cannot reply to, edit, or delete them.</li>
+      <li>Sent to all users as part of the normal operation of the service.</li>
+    </ul>
+    <p>By creating an account, you agree to receive these service communications.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">6</span> Privacy</h2>
+    <p>Your use of Chit Chat is also governed by our <a href="/privacy">Privacy Policy</a>, which explains what data we collect and how we use it. By agreeing to these Terms, you also agree to the Privacy Policy.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">7</span> Availability & Changes</h2>
+    <p>We work hard to keep Chit Chat running smoothly, but we cannot guarantee uninterrupted service. We may at times:</p>
+    <ul>
+      <li>Take the service offline for maintenance or updates.</li>
+      <li>Modify, add, or remove features without prior notice.</li>
+      <li>Change these Terms of Service — we will notify you of significant changes via the ChitChat Updates channel.</li>
+    </ul>
+    <p>Continued use of Chit Chat after changes to these Terms constitutes acceptance of the updated Terms.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">8</span> Termination</h2>
+    <p>You may stop using Chit Chat and request account deletion at any time by contacting us.</p>
+    <p>We may suspend or permanently terminate your account if you violate these Terms, without prior warning in serious cases. Upon termination, your right to use the service ends immediately.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">9</span> Disclaimer of Warranties</h2>
+    <p>Chit Chat is provided <strong style="color: rgba(240,244,255,0.75)">"as is"</strong> without warranties of any kind, express or implied. We do not guarantee that the service will be error-free, secure, or available at all times. Use the service at your own risk.</p>
+  </section>
+<section>
+    <h2><span class="section-num">10</span> Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, Chit Chat and its creators shall not be liable for any indirect, incidental, or consequential damages arising from your use of or inability to use the service — including loss of data, loss of messages, or harm resulting from interactions with other users.</p>
+    <p>Your use of the service and any interactions with other users are at your own discretion and risk.</p>
+  </section>
+
+  <section>
+    <h2><span class="section-num">11</span> Governing Law</h2>
+    <p>These Terms are governed by applicable law. Any disputes will be resolved in good faith between you and Chit Chat before any formal legal proceedings.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2><span class="section-num">12</span> Contact Us</h2>
+    <div class="contact-box">
+      <p style="margin-bottom: 0.25rem;">Questions about these Terms? Reach out — we're happy to explain anything.</p>
+      <p style="margin: 0.5rem 0 0;">
+        <strong style="color: #f0f4ff;">Chit Chat Team</strong><br />
+        <a href="mailto:akugbedesmond845@gmail.com">akugbedesmond845@gmail.com</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Chit Chat · <a href="/privacy.html">Privacy Policy</a> · Terms of Service
+</footer>
+
+</body>
+</html>

@@ -15,7 +15,6 @@ import {
 } from "@heroicons/react/24/outline";
 import "./Auth.css";
 const API_BASE = import.meta.env.VITE_API_URL;
-console.log(API_BASE);
 // ── Motion variants ──────────────────────────────────────────
 const fadeUp = {
   initial: { opacity: 0, y: 14 },

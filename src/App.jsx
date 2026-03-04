@@ -14,7 +14,6 @@ import { formatMessageTime } from "./utils/dateHelpers";
 import "./App.css";
 const API_BASE = import.meta.env.VITE_API_URL;
 const socket = io(API_BASE);
-console.log(API_BASE);
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [conversations, setConversations] = useState({});
@@ -390,8 +389,6 @@ function App() {
     if (msgs === "Invalid token") msgs = [];
     const lastMsg = msgs[msgs.length - 1] || null;
     const isTyping = typingContacts[contact._id] || false;
-    console.log(lastMsg);
-    console.log(msgs);
     let displayText = "";
     if (isTyping) {
       displayText = "Typing…";
@@ -414,7 +411,7 @@ function App() {
         }
         displayText += ` · ${formatMessageTime(lastMsg.createdAt)}`;
       } catch (err) {
-        console.log(err);
+        
       }
     } else {
       displayText = "No messages yet";
@@ -593,7 +590,6 @@ function App() {
   if (!currentUser) return <Auth onLogin={setCurrentUser} />;
 
   const currentMessages = conversations[selectedContactId] || [];
-  console.log(userPresence);
   return (
     <>
       <Toaster

@@ -95,7 +95,6 @@ function ChatArea({
       />
     );
   });
-  console.log(contactStatus);
   return (
     <>
       {/* Header */}

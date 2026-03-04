@@ -43,7 +43,7 @@ function ProfileModal({ isOpen, onClose, userId, currentUserId, onAvatarClick, o
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const res   = await fetch('http://API_BASE/api/users/me', {
+      const res   = await fetch(`${API_BASE}/api/users/me`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ bio }),

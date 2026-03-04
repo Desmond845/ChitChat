@@ -66,7 +66,7 @@ const API_BASE = import.meta.env.VITE_API_URL;
           onChange={(e) => setTerms(e.target.checked)}
           className="mr-2"
         />
-        <label htmlFor="terms">I accept the <a href="../../public/terms.html" target="_blank" className="text-blue-500">Terms and Privacy Policy</a></label>
+        <label htmlFor="terms">I accept the <a href="/terms.html" target="_blank" className="text-blue-500">Terms and Privacy Policy</a></label>
       </div>
       <button type="submit" disabled={loading} className="w-full bg-blue-500 text-white p-2 rounded">
         {loading ? 'Creating...' : 'Create Account'}

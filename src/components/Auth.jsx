@@ -461,7 +461,7 @@ function SetupProfile({ tempToken, email, onComplete, onBack }) {
         <span className="auth-terms-text">
           I agree to the{" "}
           <a
-            href="../public/terms.html"
+            href="../../public/terms.html"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -469,7 +469,7 @@ function SetupProfile({ tempToken, email, onComplete, onBack }) {
           </a>{" "}
           and{" "}
           <a
-            href="../public/privacy.html"
+            href="../../public/privacy.html"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -282,7 +282,7 @@ function App() {
         );
       }
 
-      const audio = new Audio("/receive.wav");
+      const audio = new Audio("../receive.wav");
       audio.play().catch(() => {});
     });
 
@@ -455,7 +455,7 @@ function App() {
       receiverId: selectedContactId,
     });
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-    new Audio("/send.wav").play().catch(() => {});
+    new Audio("../send.wav").play().catch(() => {});
     setInputText("");
   };
 

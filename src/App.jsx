@@ -486,7 +486,7 @@ function App() {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        `API_BASE/api/messages/${messageId}`,
+        `${API_BASE}/api/messages/${messageId}`,
         {
           method: "PATCH",
           headers: {
@@ -522,7 +522,7 @@ function App() {
     const msg = pendingDeleteMessage;
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`API_BASE/api/messages/${msg.id}`, {
+      const res = await fetch(`${API_BASE}/api/messages/${msg.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

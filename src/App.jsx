@@ -42,7 +42,7 @@ function App() {
   const contactAvatar = selectedContact?.avatar || "";
 
   const isUpdatesChannel = (id) =>
-    cleanName(contacts.find((c) => c._id === id)?.username) === "ChitChat Updates";
+    cleanName(contacts.find((c) => c._id === id)?.username) === "Chitchat Updates";
 
   // ── Unread counts ─────────────────────────────────────────
   const unreadCounts = useMemo(() => {

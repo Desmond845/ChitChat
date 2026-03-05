@@ -5,7 +5,7 @@ import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-hot-toast";
 import Avatar from "./Avatar";
 const API_BASE = import.meta.env.VITE_API_URL;
-import cleanName from './utils/formatter';
+import cleanName from '../utils/formatter';
 
 function DiscoverModal({ isOpen, onClose, onAddContact }) {
   const [users, setUsers] = useState([]);

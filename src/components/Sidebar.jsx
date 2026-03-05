@@ -6,7 +6,7 @@ import Avatar from './Avatar';
 import toast from 'react-hot-toast';
 import cleanName from '../utils/formatter';
 
-function Sidebar({ contacts, selectedContactId, onSelectContact, onAddContact, ownId, subTexts, unreadCounts, currentUserAvatar, onAvatarClick, onViewProfile, onLogout, ownName, onDiscoverClick, mobileHidden }) {
+function Sidebar({ contacts, selectedContactId, onSelectContact, onAddContact, ownId, subTexts, unreadCounts, currentUserAvatar, onAvatarClick, onViewProfile, onLogout, ownName, onDiscoverClick, mobileHidden, contactsLoading }) {
   const [searchId, setSearchId]   = useState('');
   const [searching, setSearching] = useState(false);
   const [menuOpen, setMenuOpen]   = useState(false);

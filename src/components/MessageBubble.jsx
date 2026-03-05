@@ -3,6 +3,7 @@ import { useState } from "react";
 import useLongPress from "../hooks/useLongPress";
 import { formatTime } from "../utils/dateHelpers";
 import MessageOptions from "./MessageOptions";
+import cleanName from "../utils/formatter";
 
 const MAX_PREVIEW = 500;
 
@@ -14,8 +15,8 @@ function MessageBubble({
   contactName,
 }) {
   const isMe = message.senderId === currentUserId;
-  const isUpdates = contactName === "ChitChat Updates";
-  const isOfficial = contactName === "ChitChat Official";
+const isUpdates = cleanName(contactName) === "Chitchat Updates";
+  const isOfficial = cleanName(contactName) === "Chitchat Official";
   const [expanded, setExpanded] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 

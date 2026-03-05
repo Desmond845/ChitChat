@@ -4,6 +4,8 @@ import { useState, useRef } from 'react';
 import { EllipsisVerticalIcon, UserCircleIcon, ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Avatar from './Avatar';
 import toast from 'react-hot-toast';
+import cleanName from '../utils/formatter';
+
 function Sidebar({ contacts, selectedContactId, onSelectContact, onAddContact, ownId, subTexts, unreadCounts, currentUserAvatar, onAvatarClick, onViewProfile, onLogout, ownName, onDiscoverClick, mobileHidden }) {
   const [searchId, setSearchId]   = useState('');
   const [searching, setSearching] = useState(false);
@@ -70,11 +72,11 @@ const API_BASE = import.meta.env.VITE_API_URL;
       {/* User info strip */}
       <div className="sidebar-user">
         <div className="sidebar-user-avatar-wrap">
-          <Avatar src={currentUserAvatar} username={ownName} size={40} onClick={onAvatarClick} style={{ cursor: 'pointer' }} />
+          <Avatar src={currentUserAvatar} username={cleanName(ownName)} size={40} onClick={onAvatarClick} style={{ cursor: 'pointer' }} />
           <button className="sidebar-avatar-edit-btn" onClick={onAvatarClick} title="Change avatar">✎</button>
         </div>
         <div className="sidebar-user-info">
-          <div className="sidebar-username">{ownName}</div>
+          <div className="sidebar-username">{cleanName(ownName)}</div>
           <div className="sidebar-user-id">ID: {ownId}</div>
         </div>
       </div>
@@ -99,8 +101,24 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
       {/* Contacts */}
       <div className="sidebar-contacts">
-        {contacts.map((contact) => {
-
+ {contactsLoading ? (
+          [1, 2, 3, 4].map(i => (
+            <div key={i} className="contact-skeleton">
+              <div className="skeleton-avatar" />
+              <div className="skeleton-lines">
+                <div className="skeleton-line skeleton-name" />
+                <div className="skeleton-line skeleton-sub" />
+              </div>
+            </div>
+          ))
+        ) : contacts.length === 0 ? (
+          <div className="sidebar-empty">
+            <div className="sidebar-empty-icon">👥</div>
+            <p className="sidebar-empty-text">No contacts yet</p>
+            <p className="sidebar-empty-sub">Search for a friend to get started</p>
+          </div>
+        ) : (
+        contacts.map((contact) => {
 const sub    = subTexts.find(c => contact._id === c.id);
           const unread = unreadCounts[contact._id] || 0;
           return (
@@ -109,12 +127,12 @@ const sub    = subTexts.find(c => contact._id === c.id);
               className={`contact-item ${selectedContactId === contact._id ? 'active' : ''}`}
               onClick={() => onSelectContact(contact._id)}
             >
-              <Avatar src={contact.avatar} username={contact.username} size={42} />
+              <Avatar src={contact.avatar} username={cleanName(contact.username)} size={42} />
               <div className="contact-info">
                 <div className="contact-name">
-                  {contact.username || contact.shortId || contact._id}
-                  {contact.username === 'ChitChat Updates' || contact.username === 'ChitChat Official' ? (
-                    <span className="verified-badge">✅</span>
+                  {cleanName(contact.username) || contact.shortId || contact._id}
+                  {cleanName(contact.username) === 'Chitchat Updates' || cleanName(contact.username) === 'Chitchat Official' ? (
+                    <span className="verified-badge"> ✅</span>
                   ) : null}
                 </div>
                 <div className={`contact-subtext ${sub?.isTyping ? 'typing' : ''}`}>
@@ -126,7 +144,8 @@ const sub    = subTexts.find(c => contact._id === c.id);
               )}
             </div>
           );
-        })}
+        })
+      )}
       </div>
     </div>
   );

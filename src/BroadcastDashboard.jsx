@@ -1,13 +1,7 @@
 // src/pages/BroadcastDashboard.jsx
-// ─────────────────────────────────────────────────────────────
-// Standalone admin dashboard for the ChitChat Updates account.
-// Route it in main.jsx or App.jsx:
-//   if (window.location.pathname === '/admin') return <BroadcastDashboard />;
-//
-// Design: matches Auth.css + App.css — same navy/blue palette.
-// ─────────────────────────────────────────────────────────────
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import cleanName from './utils/formatter';
 
 const API_BASE = import.meta.env.VITE_API_URL;
 const API = API_BASE;
@@ -39,7 +33,7 @@ export default function BroadcastDashboard() {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Login failed');
-    if (data.username !== 'ChitChat Updates') throw new Error('This dashboard is only for the ChitChat Updates account');
+    if (cleanName(data.username) !== 'ChitChat Updates') throw new Error('This dashboard is only for the ChitChat Updates account');
     localStorage.setItem('admin_token', data.token);
     setToken(data.token);
     setLoggedIn(true);

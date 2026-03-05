@@ -7,6 +7,7 @@ import {
 import MessageBubble from "./MessageBubble";
 import Avatar from "./Avatar";
 import { getRelativeDateLabel } from "../utils/dateHelpers";
+import cleanName from "../utils/formatter";
 
 const formatLastSeen = (lastSeen) => {
   if (!lastSeen) return "";
@@ -102,13 +103,13 @@ function ChatArea({
         <button className="chat-back-btn" onClick={onBack} aria-label="Back">
           <ArrowLeftIcon style={{ width: 20, height: 20 }} />
         </button>
-        <Avatar src={contactAvatar} username={contactName} size={40} />
+        <Avatar src={contactAvatar} username={cleanName(contactName)} size={40} />
         <div className="chat-header-info">
           <button className="chat-contact-name" onClick={onNameClick}>
-            {contactName}
-            {(contactName === "ChitChat Official" ||
-              contactName === "ChitChat Updates") && (
-              <span className="verified-badge">✅</span>
+ {cleanName(contactName)}
+            {(cleanName(contactName) === "Chitchat Official" ||
+              cleanName(contactName) === "Chitchat Updates") && (
+              <span className="verified-badge"> ✅</span>
             )}
           </button>
           {/* {contactStatus && (
@@ -142,8 +143,8 @@ function ChatArea({
                 </span>{" "}
                 typing…
               </span>
-            ) : contactName === "ChitChat Official" ||
-              contactName === "ChitChat Updates" ? (
+            ) : cleanName(contactName) === "Chitchat Official" ||
+              cleanName(contactName) === "Chitchat Updates" ? (    
               <>
                 <div className="official-channel">Official Channel</div>
               </>
@@ -209,7 +210,7 @@ function ChatArea({
           <div className="chat-empty">
             <div className="chat-empty-icon">👋</div>
             <div className="chat-empty-title">Start the conversation</div>
-            <div className="chat-empty-desc">Say hi to {contactName}!</div>
+            <div className="chat-empty-desc">Say hi to {cleanName(contactName)}!</div>
           </div>
         </div>
       ) : (

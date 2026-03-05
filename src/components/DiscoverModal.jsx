@@ -5,6 +5,7 @@ import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-hot-toast";
 import Avatar from "./Avatar";
 const API_BASE = import.meta.env.VITE_API_URL;
+import cleanName from './utils/formatter';
 
 function DiscoverModal({ isOpen, onClose, onAddContact }) {
   const [users, setUsers] = useState([]);
@@ -101,13 +102,15 @@ function DiscoverModal({ isOpen, onClose, onAddContact }) {
                     <div className="discover-user-info">
                       <Avatar
                         src={user.avatar}
-                        username={user.username}
+                        username={cleanName(user.username)}
                         size={40}
                       />
                       <div>
                         <div className="discover-user-name">
-                          {user.username}
-                        </div>
+  {cleanName(user.username)}
+                          {cleanName(user.username) === 'Chitchat Updates' || cleanName(user.username) === 'Chitchat Official' ? (
+                                               <span className="verified-badge"> ✅</span>
+                                            ) : null}                        </div>
                         <div className="discover-user-id">ID: {user.id}</div>
                       </div>
                     </div>
@@ -115,7 +118,7 @@ function DiscoverModal({ isOpen, onClose, onAddContact }) {
                       className="discover-msg-btn"
                       onClick={() => {
                         onAddContact(user);
-                        toast.success(`${user.username} added!`);
+                        toast.success(`${cleanName(user.username)} added!`);
                       }}
                     >
                       Message

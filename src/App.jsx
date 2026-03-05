@@ -12,6 +12,8 @@ import ConfirmModal from "./components/ConfirmModal";
 import DiscoverModal from "./components/DiscoverModal";
 import { formatMessageTime } from "./utils/dateHelpers";
 import "./App.css";
+import cleanName from "./utils/formatter";
+
 const API_BASE = import.meta.env.VITE_API_URL;
 const socket = io(API_BASE);
 function App() {
@@ -40,7 +42,7 @@ function App() {
   const contactAvatar = selectedContact?.avatar || "";
 
   const isUpdatesChannel = (id) =>
-    contacts.find((c) => c._id === id)?.username === "ChitChat Updates";
+    cleanName(contacts.find((c) => c._id === id)?.username) === "ChitChat Updates";
 
   // ── Unread counts ─────────────────────────────────────────
   const unreadCounts = useMemo(() => {
@@ -282,7 +284,7 @@ function App() {
         );
       }
 
-      const audio = new Audio("../receive.wav");
+      const audio = new Audio("../receive.mp3");
       audio.play().catch(() => {});
     });
 
@@ -615,6 +617,8 @@ function App() {
           ownName={currentUser.username}
           onDiscoverClick={() => setDiscoverModalOpen(true)}
           mobileHidden={!!selectedContactId}
+                  contactsLoading={initialLoading}
+
         />
 
         <div

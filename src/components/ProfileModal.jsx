@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import Avatar from './Avatar';
 const API_BASE = import.meta.env.VITE_API_URL;
+import cleanName from "../utils/formatter";
 
 function ProfileModal({ isOpen, onClose, userId, currentUserId, onAvatarClick, onBioUpdate }) {
   const [user, setUser]     = useState(null);
@@ -86,7 +87,7 @@ function ProfileModal({ isOpen, onClose, userId, currentUserId, onAvatarClick, o
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
               {/* Avatar */}
               <div className="profile-avatar-wrap">
-                <Avatar src={user.avatar} username={user.username} size={88} />
+                <Avatar src={user.avatar} username={cleanName(user.username)} size={88} />
                 {isOwn && (
                   <button
                     className="profile-avatar-edit"
@@ -99,7 +100,7 @@ function ProfileModal({ isOpen, onClose, userId, currentUserId, onAvatarClick, o
               </div>
 
               <div>
-                <div className="profile-username">{user.username}</div>
+                <div className="profile-username">{cleanName(user.username)}</div>
                 <div className="profile-user-id">ID: {user.id}</div>
               </div>
 {/* Bio */}

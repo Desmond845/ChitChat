@@ -29,7 +29,21 @@ export const getRelativeDateLabel = (isoString) => {
 
   return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
 };
+export const formatChatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  const now = new Date();
 
+  // Strip times for day comparison
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const diffDays = Math.round((today - target) / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return date.toLocaleDateString('en-US', { weekday: 'long' });
+  if (diffDays < 365) return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+};
 export const formatTime = (isoString) => {
   return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
@@ -41,23 +55,18 @@ export const formatDateWithTime = (isoString) => {
   return `${formattedDate}, ${formattedTime}`;
 };
 export const formatMessageTime = (isoString) => {
-  const date = new Date(isoString);
+ const date = new Date(isoString);
   const now = new Date();
-  
-  // Check if same day (ignoring time)
-  const isToday = date.toDateString() === now.toDateString();
-  
-  if (isToday) {
-    // Return time only
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  } else {
-    // // Return date in dd/mm/yyyy format
-    // const day = date.getDate().toString().padStart(2, '0');
-    // console.log(day);
-    // const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    // const year = date.getFullYear();
-    // return `${day}/${month}/${year}`;
+
+  // Strip times for day comparison
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const diffDays = Math.round((today - target) / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (diffDays === 1) return 'Yesterday';
+
         return date.toLocaleDateString([], { day: '2-digit', month: '2-digit', year: 'numeric' });
 
-  }
+  
 };

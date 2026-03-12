@@ -11,9 +11,16 @@ import ProfileModal from "./components/ProfileModal";
 import ConfirmModal from "./components/ConfirmModal";
 import DiscoverModal from "./components/DiscoverModal";
 import { formatMessageTime } from "./utils/dateHelpers";
-import "./App.css";
 import cleanName from "./utils/formatter";
+import {
+  registerServiceWorker,
+  requestPermissionAfterMessage,
+  subscribeToPush,
+} from "./utils/pushNotifications";
+import ProfileSettings from "./components/ProfileSettings";
 
+// 4. Pass to Sidebar:
+import "./App.css";
 const API_BASE = import.meta.env.VITE_API_URL;
 const socket = io(API_BASE);
 function App() {
@@ -33,17 +40,19 @@ function App() {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [profileUserId, setProfileUserId] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
-
+  const [replyingTo, setReplyingTo] = useState(null);
   const typingTimeoutRef = useRef(null);
   const selectedContactIdRef = useRef(selectedContactId);
   const currentUserIdRef = useRef(currentUser?.userId);
+  const [profileSettingsOpen, setProfileSettingsOpen] = useState(false);
 
   const selectedContact = contacts.find((c) => c._id === selectedContactId);
   const contactAvatar = selectedContact?.avatar || "";
+  const hasAskedPushRef = useRef(false);
 
   const isUpdatesChannel = (id) =>
-    cleanName(contacts.find((c) => c._id === id)?.username) === "Chitchat Updates";
-
+    cleanName(contacts.find((c) => c._id === id)?.username) ===
+    "Chitchat Updates";
   // ── Unread counts ─────────────────────────────────────────
   const unreadCounts = useMemo(() => {
     const counts = {};
@@ -161,6 +170,10 @@ function App() {
             avatar: user.avatar,
             bio: user.bio,
           });
+          registerServiceWorker();
+          if (Notification.permission === "granted") {
+            subscribeToPush(token);
+          }
         } else {
           localStorage.removeItem("token");
         }
@@ -189,7 +202,7 @@ function App() {
 
   // ── Main socket listeners ──────────────────────────────────
   useEffect(() => {
-    socket.on("user profile updated", ({ userId, bio, avatar }) => {
+    socket.on("user profile updated", ({ userId, bio, avatar, username }) => {
       setContacts((prev) =>
         prev.map((c) =>
           c._id === userId
@@ -197,6 +210,7 @@ function App() {
                 ...c,
                 ...(bio !== undefined && { bio }),
                 ...(avatar !== undefined && { avatar }),
+                ...(username !== undefined && { username }),
               }
             : c
         )
@@ -206,6 +220,7 @@ function App() {
           ...prev,
           ...(bio !== undefined && { bio }),
           ...(avatar !== undefined && { avatar }),
+          ...(username !== undefined && { username }),
         }));
       }
     });
@@ -221,6 +236,12 @@ function App() {
     socket.on("chat message", (msg) => {
       const currentUserId = currentUserIdRef.current;
       const selectedId = selectedContactIdRef.current;
+      const token = localStorage.getItem("token") || null;
+      if (!hasAskedPushRef.current) {
+        hasAskedPushRef.current = true;
+        requestPermissionAfterMessage(token); // pass your JWT token
+      }
+
       if (!currentUserId) return;
       const initialStatus =
         msg.senderId !== currentUserId && selectedId === msg.senderId
@@ -356,7 +377,19 @@ function App() {
         return u;
       });
     });
-
+    socket.on("reaction updated", ({ messageId, reactions }) => {
+      setConversations((prev) => {
+        const updated = { ...prev };
+        for (const contactId in updated) {
+          updated[contactId] = updated[contactId].map((msg) =>
+            (msg.id || msg._id)?.toString() === messageId.toString()
+              ? { ...msg, reactions }
+              : msg
+          );
+        }
+        return updated;
+      });
+    });
     return () => {
       socket.off("chat message");
       socket.off("message saved");
@@ -368,6 +401,7 @@ function App() {
       socket.off("message delivered");
       socket.off("user profile updated");
       socket.off("avatar updated");
+      socket.off("reaction updated");
     };
   }, [currentUser, contacts]);
 
@@ -391,6 +425,7 @@ function App() {
     if (msgs === "Invalid token") msgs = [];
     const lastMsg = msgs[msgs.length - 1] || null;
     const isTyping = typingContacts[contact._id] || false;
+
     let displayText = "";
     if (isTyping) {
       displayText = "Typing…";
@@ -413,7 +448,7 @@ function App() {
         }
         displayText += ` · ${formatMessageTime(lastMsg.createdAt)}`;
       } catch (err) {
-        
+        console.log(err);
       }
     } else {
       displayText = "No messages yet";
@@ -440,12 +475,19 @@ function App() {
     const tempId = `${Date.now()}-${Math.random().toString(36)}`;
     const newMessage = {
       tempId,
-      text: inputText,
+      text: inputText.trim(),
       senderId: currentUser.userId,
       receiverId: selectedContactId,
       createdAt: new Date().toISOString(),
       status: "sending",
       edited: false,
+      replyTo: replyingTo
+        ? {
+            messageId: replyingTo.messageId,
+            text: replyingTo.text,
+            senderId: replyingTo.senderId,
+          }
+        : null,
     };
     setConversations((prev) => ({
       ...prev,
@@ -459,10 +501,22 @@ function App() {
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
     new Audio("../send.wav").play().catch(() => {});
     setInputText("");
+    setReplyingTo(null);
   };
-
+  const handleReact = (messageId, emoji) => {
+    const contact = contacts.find((c) => c._id === selectedContactId);
+    socket.emit("react message", {
+      messageId,
+      emoji,
+      userId: currentUser.userId,
+      receiverId: selectedContactId,
+    });
+  };
   const handleSelectContact = (contactId) => {
     setSelectedContactId(contactId);
+    if (window.innerWidth <= 768) {
+      enterFullscreen();
+    }
     socket.emit("read", { readerId: currentUser.userId, contactId });
     setConversations((prev) => ({
       ...prev,
@@ -487,17 +541,14 @@ function App() {
   const handleUpdateMessage = async (messageId, newText) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(
-        `${API_BASE}/api/messages/${messageId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ text: newText }),
-        }
-      );
+      const res = await fetch(`${API_BASE}/api/messages/${messageId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ text: newText }),
+      });
       const updated = await res.json();
       if (!res.ok) throw new Error(updated.error);
       setConversations((prev) => {
@@ -560,7 +611,10 @@ function App() {
     setCurrentUser((prev) => ({ ...prev, bio: newBio }));
     emitProfileUpdate({ bio: newBio });
   };
-
+  const handleUsernameUpdate = (newUsername) => {
+    setCurrentUser((prev) => ({ ...prev, username: newUsername }));
+    emitProfileUpdate({ username: newUsername });
+  };
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -572,7 +626,57 @@ function App() {
     setProfileUserId(userId);
     setProfileModalOpen(true);
   };
+  const handleBack = () => {
+    if (window.innerWidth <= 768) {
+      exitFullscreen();
+    }
+    setSelectedContactId(null);
+  };
 
+  const scrollToMessage = (messageId) => {
+    if (!messageId) return;
+    const id = messageId.toString(); // force string always
+
+    const tryScroll = (attempts = 0) => {
+      const el = document.getElementById(`msg-${id}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("msg-highlight");
+        setTimeout(() => el.classList.remove("msg-highlight"), 1500);
+      } else if (attempts < 10) {
+        // DOM not ready yet — retry up to 10 times
+        setTimeout(() => tryScroll(attempts + 1), 100);
+      }
+    };
+
+    tryScroll();
+  };
+  const enterFullscreen = () => {
+    // return;
+    const el = document.documentElement;
+    try {
+      if (el.requestFullscreen) {
+        el.requestFullscreen();
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen(); // Safari
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const exitFullscreen = () => {
+    return;
+    try {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // ── Render ──────────────────────────────────────────────────
 
   if (initialLoading) {
@@ -587,6 +691,20 @@ function App() {
           <span />
         </div>
       </div>
+    );
+  }
+
+  // 3. Add after the initialLoading check, before the !currentUser check:
+  if (profileSettingsOpen) {
+    return (
+      <ProfileSettings
+        currentUser={currentUser}
+        onBack={() => setProfileSettingsOpen(false)}
+        onAvatarUpload={handleAvatarUpload}
+        onBioUpdate={handleBioUpdate}
+        onUsernameUpdate={handleUsernameUpdate}
+        onLogout={handleLogout}
+      />
     );
   }
   if (!currentUser) return <Auth onLogin={setCurrentUser} />;
@@ -617,8 +735,8 @@ function App() {
           ownName={currentUser.username}
           onDiscoverClick={() => setDiscoverModalOpen(true)}
           mobileHidden={!!selectedContactId}
-                  contactsLoading={initialLoading}
-
+          contactsLoading={initialLoading}
+          onOpenProfile={() => setProfileSettingsOpen(true)}
         />
 
         <div
@@ -643,12 +761,21 @@ function App() {
               setPendingDeleteMessage(msg);
               setConfirmModalOpen(true);
             }}
+            onReact={handleReact}
             contactAvatar={contactAvatar}
             onNameClick={() => openProfile(selectedContactId)}
             onOpenProfile={() => openProfile(selectedContactId)}
             onLogout={handleLogout}
-            onBack={() => setSelectedContactId(null)}
+            onBack={() => handleBack}
             isTyping={typingContacts[selectedContactId]}
+            onReply={(data) => {
+              setReplyingTo({
+                messageId: data.messageId,
+                text: data.text,
+                senderId: data.senderId,
+              });
+            }}
+            onScrollToMessage={scrollToMessage}
           />
           {selectedContactId && (
             <MessageInput
@@ -656,6 +783,15 @@ function App() {
               onChange={setInputText}
               onSend={handleSendMessage}
               disabled={isUpdatesChannel(selectedContactId)}
+              replyingTo={replyingTo}
+              onCancelReply={() => setReplyingTo(null)}
+              contactName={
+                cleanName(
+                  contacts.find((c) => c._id === selectedContactId)?.username
+                ) || null
+              }
+              currentUserId={currentUser.userId}
+              scrollToMessage={scrollToMessage}
             />
           )}
         </div>

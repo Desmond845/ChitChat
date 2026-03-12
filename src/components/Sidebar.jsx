@@ -1,16 +1,31 @@
 
 // src/components/Sidebar.jsx
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { EllipsisVerticalIcon, UserCircleIcon, ArrowRightOnRectangleIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Avatar from './Avatar';
 import toast from 'react-hot-toast';
 import cleanName from '../utils/formatter';
-
-function Sidebar({ contacts, selectedContactId, onSelectContact, onAddContact, ownId, subTexts, unreadCounts, currentUserAvatar, onAvatarClick, onViewProfile, onLogout, ownName, onDiscoverClick, mobileHidden, contactsLoading }) {
+function Sidebar({ contacts, selectedContactId, onSelectContact, onAddContact, ownId, subTexts, unreadCounts, currentUserAvatar, onAvatarClick, onViewProfile, onLogout, ownName, onDiscoverClick, mobileHidden, contactsLoading, onOpenProfile  }) {
   const [searchId, setSearchId]   = useState('');
   const [searching, setSearching] = useState(false);
   const [menuOpen, setMenuOpen]   = useState(false);
   const menuRef = useRef(null);
+
+
+
+
+  //  const [menuOpen, setMenuOpen] = useState(false);
+  // const menuRef = useRef(null);
+  useEffect(() => {
+    const handleClick = (e) => {
+      if(menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown',handleClick);
+  
+  }, [])
 const API_BASE = import.meta.env.VITE_API_URL;
 
   const handleSearch = async () => {
@@ -57,7 +72,7 @@ const API_BASE = import.meta.env.VITE_API_URL;
           </button>
           {menuOpen && (
             <div className="app-dropdown" onClick={() => setMenuOpen(false)}>
-              <button className="app-dropdown-item" onClick={onViewProfile}>
+              <button className="app-dropdown-item" onClick={onOpenProfile}>
                 <UserCircleIcon style={{ width: 16, height: 16 }} /> My Profile
               </button>
               <div className="app-dropdown-divider" />
@@ -101,7 +116,10 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
       {/* Contacts */}
       <div className="sidebar-contacts">
+
+
  {contactsLoading ? (
+// Loading skeletons
           [1, 2, 3, 4].map(i => (
             <div key={i} className="contact-skeleton">
               <div className="skeleton-avatar" />
@@ -118,7 +136,10 @@ const API_BASE = import.meta.env.VITE_API_URL;
             <p className="sidebar-empty-sub">Search for a friend to get started</p>
           </div>
         ) : (
+
+
         contacts.map((contact) => {
+
 const sub    = subTexts.find(c => contact._id === c.id);
           const unread = unreadCounts[contact._id] || 0;
           return (

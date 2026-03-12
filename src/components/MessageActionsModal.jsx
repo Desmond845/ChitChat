@@ -1,6 +1,5 @@
-
 // components/MessageActionsModal.jsx
-import { useState } from 'react';
+import { useState } from "react";
 
 function MessageActionsModal({ message, onClose, onEdit, onDelete }) {
   const [editMode, setEditMode] = useState(false);
@@ -45,13 +44,18 @@ function MessageActionsModal({ message, onClose, onEdit, onDelete }) {
       <div className="bg-white rounded-lg p-6 w-64">
         <h3 className="text-lg font-bold mb-4">Message Options</h3>
         <button
-          onClick={() => {setEditMode(true);}}
+          onClick={() => {
+            setEditMode(true);
+          }}
           className="block w-full text-left px-4 py-2 hover:bg-gray-100"
         >
           Edit
         </button>
         <button
-          onClick={() => { onDelete(message); onClose(); }}
+          onClick={() => {
+            onDelete(message);
+            onClose();
+          }}
           className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
         >
           Delete

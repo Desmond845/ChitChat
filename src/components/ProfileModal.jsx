@@ -3,9 +3,9 @@ import { Dialog } from '@headlessui/react';
 import { XMarkIcon, PencilIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import cleanName from '../utils/formatter';
 import Avatar from './Avatar';
 const API_BASE = import.meta.env.VITE_API_URL;
-import cleanName from "../utils/formatter";
 
 function ProfileModal({ isOpen, onClose, userId, currentUserId, onAvatarClick, onBioUpdate }) {
   const [user, setUser]     = useState(null);

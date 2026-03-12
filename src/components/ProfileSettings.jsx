@@ -37,7 +37,6 @@ function ProfileSettings({ currentUser, onBack, onAvatarUpload, onBioUpdate, onU
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Failed to update');
-            console.log(data);
             onUsernameUpdate(data.username);
             setEditingUsername(false);
         } catch (err) {

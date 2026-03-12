@@ -20,7 +20,6 @@ function MessageBubble({
   onScrollToMessage,
   searchQuery
 }) {
-  console.log(message);
   const isMe = message.senderId === currentUserId;
   const isUpdates = cleanName(contactName) === "Chitchat Updates";
   const isOfficial = cleanName(contactName) === "Chitchat Official";
@@ -67,7 +66,6 @@ const handleTouchEnd = () => {
   const canEdit = isMe && !isUpdates;
   const canDelete = !isUpdates && !isOfficial;
 const canReact = !isUpdates;
-console.log(canDelete);
   const statusIcon = () => {
     if (!isMe) return null;
     switch (message.status) {
@@ -96,7 +94,6 @@ console.log(canDelete);
   };
 
   const longPressHandlers = useLongPress(handleLongPress, null, { delay: 600 });
-console.log(message.replyTo);
 
 const highlightText = (text, query) => {
   if (!query?.trim()) return text;

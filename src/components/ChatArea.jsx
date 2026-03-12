@@ -69,7 +69,6 @@ const handleScroll = useCallback(() => {
 
   // Find which date group is currently at the top of the viewport
   const dividers = el.querySelectorAll('[data-date-label]');
-  console.log(dividers);
   let currentLabel = '';
   dividers.forEach((d) => {
     if (d.getBoundingClientRect().top <= el.getBoundingClientRect().top + 60) {
@@ -200,7 +199,6 @@ useEffect(() => {
       />
     );
   });
-  console.log(contactStatus);
   
   return (
     <>
